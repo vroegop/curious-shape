@@ -1,2 +1,1 @@
-# dnd-avatar
-A DND Avatar webcomponent
+see [index.html](index.html)
