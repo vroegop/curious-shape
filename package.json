@@ -1,6 +1,6 @@
 {
   "name": "curious-shape",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A shape generator for the web",
   "main": "curious-shape.js",
   "author": "Randy Vroegop",
