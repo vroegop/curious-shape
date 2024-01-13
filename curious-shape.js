@@ -12,11 +12,11 @@ class CuriousShape extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['shape'];
+        return ['data-shape'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'shape') {
+        if (name === 'data-shape') {
             this.shape = newValue;
             this.render();
         }
