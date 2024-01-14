@@ -13,7 +13,7 @@ class CuriousShape extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['data-shape', 'overflow'];
+        return ['data-shape', 'data-overflow'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -21,7 +21,7 @@ class CuriousShape extends HTMLElement {
             this.shape = newValue;
             this.render();
         }
-        if (name === 'overflow') {
+        if (name === 'data-overflow') {
             this.overflow = newValue;
             this.render();
         }
