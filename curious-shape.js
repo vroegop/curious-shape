@@ -4,6 +4,7 @@ class CuriousShape extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shape = 'triangle';
+        this.overflow = 'hidden';
         this.render();
     }
 
@@ -12,12 +13,16 @@ class CuriousShape extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['data-shape'];
+        return ['data-shape', 'overflow'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'data-shape') {
             this.shape = newValue;
+            this.render();
+        }
+        if (name === 'overflow') {
+            this.overflow = newValue;
             this.render();
         }
     }
@@ -35,9 +40,22 @@ class CuriousShape extends HTMLElement {
             }
 
             div.border-background {
-                background: var(--border-background);
+                position:relative;
                 max-height: 100%;
                 width: 100%;
+                aspect-ratio: ${this.shapeArray[this.shape].aspectRatio};
+            }
+            
+            div.border-background:before {
+                content: ' ';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--border-background);
+                
+                clip-path: ${this.shapeArray[this.shape].shape};
             }
 
             div.content {
@@ -49,6 +67,7 @@ class CuriousShape extends HTMLElement {
                 justify-content: center;
                 flex-wrap: wrap;
                 box-sizing: border-box;
+                ${this.overflow === 'hidden' ? `clip-path: ${this.shapeArray[this.shape].shape};` : ''}
             }
 
             div.content:before {
@@ -61,6 +80,8 @@ class CuriousShape extends HTMLElement {
                 z-index: -1;
                 background: var(--content-background);
                 filter: blur(var(--background-blur));
+                
+                clip-path: ${this.shapeArray[this.shape].shape};
             }
 
             .content *, .content ::slotted(*) {
@@ -74,8 +95,8 @@ class CuriousShape extends HTMLElement {
 
     get html() {
         return `
-            <div class="border-background" style="clip-path: ${this.shapeArray[this.shape].shape}; aspect-ratio: ${this.shapeArray[this.shape].aspectRatio};">
-                <div class="content" style="clip-path: ${this.shapeArray[this.shape].shape};">
+            <div class="border-background">
+                <div class="content">
                     <slot></slot>
                 </div>
             </div>
