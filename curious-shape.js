@@ -36,6 +36,8 @@ class CuriousShape extends HTMLElement {
 
             div.border-background {
                 background: var(--border-background);
+                max-height: 100%;
+                width: 100%;
             }
 
             div.content {
